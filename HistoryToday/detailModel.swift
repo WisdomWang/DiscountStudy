@@ -12,6 +12,7 @@ import ObjectMapper
 class detailModel: NSObject,Mappable {
     var title : String?
     var content : String?
+    var url:String?
     
     required init?(map: Map) {
        
@@ -20,5 +21,6 @@ class detailModel: NSObject,Mappable {
         
         title<-map["title"]
         content<-map["content"]
+        url<-map["picUrl.0.url"]
     }
 }

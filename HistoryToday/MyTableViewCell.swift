@@ -12,9 +12,7 @@ class MyTableViewCell: UITableViewCell {
 
     var dateLabel = UILabel()
     var titleLabel = UILabel()
-    //var desLabel = UILabel()
-    //var img = UIImageView()
-    //240
+  
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style:style, reuseIdentifier: reuseIdentifier)
         

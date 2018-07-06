@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import ObjectMapper
-
 class DetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let mainTableView = UITableView(frame: CGRect(x: 0, y: 0, width:SCREEN_WIDTH, height: SCREEN_HEIGHT), style: UITableViewStyle.plain)
@@ -24,6 +23,9 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.navigationItem.title = "历史上的今天"
         mainTableView.delegate = self
         mainTableView.dataSource = self
+        mainTableView.estimatedRowHeight = self.view.frame.size.height
+        mainTableView.rowHeight = UITableViewAutomaticDimension
+        mainTableView.tableFooterView = UIView()
         self.view.addSubview(mainTableView)
         self.loadList()
         }
@@ -34,13 +36,21 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let identifier = "detailCell"
-        let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: identifier)
+        let cell = DetailTableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: identifier)
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         let user = arrList[indexPath.row] as! detailModel
-        cell.textLabel?.text = user.title
-        cell.textLabel?.numberOfLines = 0
-        cell.detailTextLabel?.text = user.content
-        cell.detailTextLabel?.numberOfLines = 0
+        cell.titleLabel.text = user.title
+        cell.detailLabel.text = user.content
+        //定义URL对象
+        if (user.url != nil) {
+            let url = URL(string: user.url!)
+            let data = try! Data(contentsOf: url!)
+            let newImage = UIImage(data: data)
+            //cell.imageView?.image = newImage
+            cell.img.image = newImage
+        }
+        
+        
         return cell
     }
     
@@ -50,10 +60,12 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
            let dic : Dictionary<String, Any> = response.result.value as! Dictionary<String, Any>
             let arr:Array<Any> = dic["result"] as!Array<Any>
+            print(response.result.value as Any)
             for i in 0..<arr.count {
 
                 let dic3:Dictionary<String,Any> = arr[i] as! Dictionary<String, Any>
                 let user = detailModel(JSON:dic3)
+                print(user?.url as Any)
                 self.arrList.append(user as Any)
             }
           self.mainTableView.reloadData()
