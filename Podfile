@@ -6,10 +6,9 @@ target 'HistoryToday' do
   use_frameworks!
 
   pod 'SnapKit'
-
   pod 'Alamofire'
-
   pod 'ObjectMapper'
-
+  pod 'Hue'
+  pod 'NVActivityIndicatorView'
 
 end

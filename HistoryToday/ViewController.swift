@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Hue
 
 // 屏幕的宽
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
@@ -22,17 +23,39 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var arrList = [Any]()
     var arrDate = [Any]()
     var idNameArr = [Any]()
+    let now = Date()
+    let dformatter = DateFormatter()
+    
     let mainTableView = UITableView(frame: CGRect(x: 0, y: 0, width:SCREEN_WIDTH, height: SCREEN_HEIGHT), style: UITableViewStyle.plain)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.loadList()
         self.navigationItem.title = "历史上的今天"
         mainTableView.delegate = self
         mainTableView.dataSource = self
         mainTableView.rowHeight = 90
+        mainTableView.showsVerticalScrollIndicator = false
         self.view.addSubview(mainTableView)
+        self.loadList()
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView()
+        headerView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 50)
+        headerView.backgroundColor = UIColor(hex: "#eeeeee")
+        let label = UILabel(frame: CGRect(x: 16, y: 0, width: SCREEN_WIDTH-32, height: 50))
+        dformatter.dateFormat = "YYYY年MM月dd日"
+        label.text = "Today：\(dformatter.string(from: now))"
+        headerView.addSubview(label)
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 50
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrList.count
     }
@@ -54,8 +77,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func loadList() {
-        let now = Date()
-        let dformatter = DateFormatter()
+       
         dformatter.dateFormat = "MM/dd"
         print("当前日期时间：\(dformatter.string(from: now))")
         let str = dformatter.string(from: now)
@@ -66,9 +88,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let url2 = "\(value10)/\(value20)"
         let url1 = "http://v.juhe.cn/todayOnhistory/queryEvent.php?key=3955d71543be4871a52345def305b057&date="
         let url =  url1+url2
+        
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             print(response.result.value as Any)
-            
             let dic : Dictionary<String, Any> = response.result.value as! Dictionary<String, Any>
             let arr:Array<Any> = dic["result"] as!Array<Any>
             for i in 0..<arr.count {

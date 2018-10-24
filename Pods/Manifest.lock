@@ -1,18 +1,26 @@
 PODS:
-  - Alamofire (4.7.2)
-  - ObjectMapper (3.2.0)
-  - SnapKit (4.0.0)
+  - Alamofire (4.7.3)
+  - Hue (3.0.1)
+  - NVActivityIndicatorView (4.4.0):
+    - NVActivityIndicatorView/Presenter (= 4.4.0)
+  - NVActivityIndicatorView/Presenter (4.4.0)
+  - ObjectMapper (3.3.0)
+  - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - Alamofire
+  - Hue
+  - NVActivityIndicatorView
   - ObjectMapper
   - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  ObjectMapper: 5cccd2de6f253eda859df8116a5a554d9769e859
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
+  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 9cd5b0af57150cb1d790476fb941bc24db3667eb
+PODFILE CHECKSUM: d109edf007b70c85a09436c73252d8802aa7a636
 
 COCOAPODS: 1.4.0

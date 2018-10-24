@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1B93034E197761238F808F92 /* Pods_HistoryToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A1F5E503E067E7CBDE6358 /* Pods_HistoryToday.framework */; };
+		4A047624218046A50000602D /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A047623218046A50000602D /* PopView.swift */; };
 		4A08CA5520EE1701008E01C0 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08CA5420EE1701008E01C0 /* DetailTableViewCell.swift */; };
 		4A798B9C20DA44BE0035C189 /* detailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A798B9B20DA44BE0035C189 /* detailModel.swift */; };
+		4A7F251B2101D8B200D8A61E /* TipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F251A2101D8B200D8A61E /* TipView.swift */; };
 		4A9AB12C20CA616C00C333BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9AB12B20CA616C00C333BC /* AppDelegate.swift */; };
 		4A9AB12E20CA616C00C333BC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9AB12D20CA616C00C333BC /* ViewController.swift */; };
 		4A9AB13120CA616C00C333BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A9AB12F20CA616C00C333BC /* Main.storyboard */; };
@@ -39,8 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A047623218046A50000602D /* PopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
 		4A08CA5420EE1701008E01C0 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		4A798B9B20DA44BE0035C189 /* detailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailModel.swift; sourceTree = "<group>"; };
+		4A7F251A2101D8B200D8A61E /* TipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
 		4A9AB12820CA616C00C333BC /* HistoryToday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoryToday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A9AB12B20CA616C00C333BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A9AB12D20CA616C00C333BC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				4A9AB15920CA637400C333BC /* MyTableViewCell.swift */,
 				4A08CA5420EE1701008E01C0 /* DetailTableViewCell.swift */,
 				4A798B9B20DA44BE0035C189 /* detailModel.swift */,
+				4A047623218046A50000602D /* PopView.swift */,
+				4A7F251A2101D8B200D8A61E /* TipView.swift */,
 				4A9AB12F20CA616C00C333BC /* Main.storyboard */,
 				4A9AB13220CA616E00C333BC /* Assets.xcassets */,
 				4A9AB13420CA616E00C333BC /* LaunchScreen.storyboard */,
@@ -332,12 +338,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HistoryToday/Pods-HistoryToday-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
@@ -353,7 +363,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A7F251B2101D8B200D8A61E /* TipView.swift in Sources */,
 				4A08CA5520EE1701008E01C0 /* DetailTableViewCell.swift in Sources */,
+				4A047624218046A50000602D /* PopView.swift in Sources */,
 				4A9AB12E20CA616C00C333BC /* ViewController.swift in Sources */,
 				4A9AB12C20CA616C00C333BC /* AppDelegate.swift in Sources */,
 				4AF7223820D1028B00E2FC23 /* DetailViewController.swift in Sources */,
@@ -535,7 +547,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHN73T23TJ;
 				INFOPLIST_FILE = HistoryToday/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZexueEducation.HistoryToday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -551,7 +567,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHN73T23TJ;
 				INFOPLIST_FILE = HistoryToday/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZexueEducation.HistoryToday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -567,7 +587,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHN73T23TJ;
 				INFOPLIST_FILE = HistoryTodayTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZexueEducation.HistoryTodayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -584,7 +608,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHN73T23TJ;
 				INFOPLIST_FILE = HistoryTodayTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZexueEducation.HistoryTodayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -600,7 +628,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHN73T23TJ;
 				INFOPLIST_FILE = HistoryTodayUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZexueEducation.HistoryTodayUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -616,7 +648,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHN73T23TJ;
 				INFOPLIST_FILE = HistoryTodayUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZexueEducation.HistoryTodayUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

@@ -7,15 +7,16 @@
 //
 
 import UIKit
-
+typealias toBigPic = ()->Void
 class DetailTableViewCell: UITableViewCell {
 
     var titleLabel = UILabel()
     var detailLabel = UILabel()
     var img = UIImageView()
-    //240
+    var pushToBigPic:toBigPic?
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style:style, reuseIdentifier: reuseIdentifier)
+        super.init(style:style, reuseIdentifier: reuseIdentifier) 
         
         self.contentView.addSubview(titleLabel)
         titleLabel.numberOfLines = 0
@@ -33,17 +34,27 @@ class DetailTableViewCell: UITableViewCell {
             make.right.equalTo(self.contentView.snp.right).offset(-16)
         }
         self.contentView.addSubview(img)
+        img.isUserInteractionEnabled = true
         img.snp.makeConstraints { (make) in
             make.top.equalTo(detailLabel.snp.bottom).offset(5)
-            make.bottom.equalTo(self.contentView.snp.bottom)
+            make.bottom.equalTo(self.contentView.snp.bottom).offset(-50)
             make.centerX.equalTo(self.contentView.snp.centerX)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(pushClick))
+        img.addGestureRecognizer(tap)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    @objc func pushClick() {
+        
+        self.pushToBigPic!()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

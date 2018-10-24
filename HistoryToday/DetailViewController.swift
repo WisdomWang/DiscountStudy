@@ -50,6 +50,10 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.img.image = newImage
         }
         
+        cell.pushToBigPic = {
+            
+            PopView.showImage(image: cell.img.image!)
+        }
         
         return cell
     }
