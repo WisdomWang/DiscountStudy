@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import ObjectMapper
+
 class DetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let mainTableView = UITableView(frame: CGRect(x: 0, y: 0, width:SCREEN_WIDTH, height: SCREEN_HEIGHT), style: UITableViewStyle.plain)
@@ -46,7 +47,6 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
             let url = URL(string: user.url!)
             let data = try! Data(contentsOf: url!)
             let newImage = UIImage(data: data)
-            //cell.imageView?.image = newImage
             cell.img.image = newImage
         }
         
