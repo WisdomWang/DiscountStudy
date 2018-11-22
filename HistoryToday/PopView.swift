@@ -37,10 +37,16 @@ class PopView: UIView {
             
             make.centerX.equalTo(bg.snp.centerX)
             make.centerY.equalTo(bg.snp.centerY)
+            make.width.equalTo(SCREEN_WIDTH-60)
+            make.height.equalTo(SCREEN_WIDTH-60)
         }
         
         let tap = UITapGestureRecognizer(target: bg, action: #selector(popBack))
         bg.addGestureRecognizer(tap)
+        
+        let tap1 = UISwipeGestureRecognizer(target: bg, action: #selector(popBack))
+        tap1.direction = .down
+        bg.addGestureRecognizer(tap1)
         
     }
     

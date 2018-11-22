@@ -16,17 +16,26 @@ let SCREEN_WIDTH = UIScreen.main.bounds.size.width
 // 屏幕的高
 let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
 
+let STATUS = UIApplication.shared.statusBarFrame.size.height
+
+let NAV:CGFloat = 44
+
 var idStr = ""
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    var label:UILabel!
     var arrList = [Any]()
     var arrDate = [Any]()
     var idNameArr = [Any]()
     let now = Date()
     let dformatter = DateFormatter()
     
-    let mainTableView = UITableView(frame: CGRect(x: 0, y: 0, width:SCREEN_WIDTH, height: SCREEN_HEIGHT), style: UITableViewStyle.plain)
+    var changedDate:Date!
+    
+    var bgView:UIView!
+    
+    let mainTableView = UITableView(frame: CGRect(x: 0, y: 50+NAV+STATUS, width:SCREEN_WIDTH, height: SCREEN_HEIGHT), style: UITableViewStyle.plain)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,27 +45,31 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         mainTableView.rowHeight = 90
         mainTableView.showsVerticalScrollIndicator = false
         self.view.addSubview(mainTableView)
-        self.loadList()
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        self.loadList(date: now)
+        changedDate = now
         
         let headerView = UIView()
-        headerView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 50)
+        headerView.frame = CGRect(x: 0, y: STATUS+NAV, width: SCREEN_WIDTH, height: 50)
         headerView.backgroundColor = UIColor(hex: "#eeeeee")
-        let label = UILabel(frame: CGRect(x: 16, y: 0, width: SCREEN_WIDTH-32, height: 50))
+        label = UILabel(frame: CGRect(x: 16, y: 0, width: SCREEN_WIDTH-32, height: 50))
         dformatter.dateFormat = "YYYY年MM月dd日"
-        label.text = "Today：\(dformatter.string(from: now))"
+        label.text = dformatter.string(from:now)
+        //label.text = "Today：\(dformatter.string(from: now))"
         headerView.addSubview(label)
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return 50
+        let button = UIButton(frame: CGRect(x: SCREEN_WIDTH-76, y: 0, width: 60, height: 50))
+        button.setTitle("切换日期", for:.normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(UIColor(hex: "#333333"), for: .normal)
+        button.addTarget(self, action: #selector(changeDate), for: .touchUpInside)
+        headerView.addSubview(button)
+        
+        self.view.addSubview(headerView)
+
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return arrList.count
     }
     
@@ -69,6 +82,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cell.dateLabel.text = (arrDate[indexPath.row] as!String)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let vc = DetailViewController()
@@ -76,11 +90,70 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         idStr = idNameArr[indexPath.row] as! String
     }
     
-    func loadList() {
+   @objc func changeDate () {
+    
+       let window = UIApplication.shared.keyWindow
+        bgView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        bgView.backgroundColor = UIColor(hex: "#000000").alpha(0.4)
+        self.view.insertSubview(bgView, aboveSubview: window!)
+    
+    
+        let picker = UIDatePicker(frame: CGRect(x: 0, y: SCREEN_HEIGHT-200, width: SCREEN_WIDTH, height: 200))
+        picker.datePickerMode = UIDatePickerMode.date
+        picker.backgroundColor = UIColor(hex: "#eeeeee")
+        picker.date = changedDate
+        bgView.addSubview(picker)
+        picker.addTarget(self, action: #selector(dateChange(picker:)), for: .valueChanged)
+        let locale = NSLocale(localeIdentifier: "zh_CN")
+        picker.locale = locale as Locale
+    
+        let button = UIButton(frame: CGRect(x: picker.frame.size.width - 50, y: SCREEN_HEIGHT-190, width: 40, height: 30))
+        button.setTitle("确定", for:.normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(UIColor(hex: "#333333"), for: .normal)
+        button.addTarget(self, action: #selector(finish), for: .touchUpInside)
+        bgView.addSubview(button)
+    
+        let cancelButton = UIButton(frame: CGRect(x: 10, y: SCREEN_HEIGHT-190, width: 40, height: 30))
+        cancelButton.setTitle("取消", for:.normal)
+        cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        cancelButton.setTitleColor(UIColor(hex: "#333333"), for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        bgView.addSubview(cancelButton)
+
+    }
+    
+    @objc  func cancel () {
+        
+        UIView.animate(withDuration: 0.5) {
+            
+            self.bgView.removeFromSuperview()
+        }
+
+    }
+    
+    @objc  func  finish () {
+        
+        bgView.removeFromSuperview()
+        dformatter.dateFormat = "yyyy年 MM月 dd日"
+        label.text = dformatter.string(from:changedDate)
+        self.loadList(date: changedDate)
+    }
+    
+    @objc  func dateChange (picker:UIDatePicker) {
+        
+        changedDate = Date()
+        changedDate = picker.date
+    }
+    
+    func loadList(date:Date) {
        
+        arrList.removeAll()
+        arrDate.removeAll()
+        idNameArr.removeAll()
         dformatter.dateFormat = "MM/dd"
-        print("当前日期时间：\(dformatter.string(from: now))")
-        let str = dformatter.string(from: now)
+        print("当前日期时间：\(dformatter.string(from: date))")
+        let str = dformatter.string(from: date)
         let str10 = (str as NSString).substring(to: 2)
         let value10 = (str10 as NSString).integerValue
         let str20 = (str as NSString).substring(from: 3)
@@ -103,6 +176,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             self.mainTableView.reloadData()
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
