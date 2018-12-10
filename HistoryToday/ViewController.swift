@@ -35,7 +35,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     var bgView:UIView!
     
-    let mainTableView = UITableView(frame: CGRect(x: 0, y: 50+NAV+STATUS, width:SCREEN_WIDTH, height: SCREEN_HEIGHT), style: UITableViewStyle.plain)
+    let mainTableView = UITableView(frame: CGRect(x: 0, y: 50+NAV+STATUS, width:SCREEN_WIDTH, height: SCREEN_HEIGHT-50-STATUS-NAV), style: UITableViewStyle.plain)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
