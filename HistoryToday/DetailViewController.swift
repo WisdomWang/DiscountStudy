@@ -62,12 +62,18 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
         var url = "http://v.juhe.cn/todayOnhistory/queryDetail.php?key=3955d71543be4871a52345def305b057&e_id="
         url = url+idStr
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            
+            print(response.error as Any)
            let dic : Dictionary<String, Any> = response.result.value as! Dictionary<String, Any>
-            let arr:Array<Any> = dic["result"] as!Array<Any>
+            var arr:Array<Any>?
+            arr = dic["result"] as? Array<Any>
             print(response.result.value as Any)
-            for i in 0..<arr.count {
+            if !(arr != nil) {
+                return
+            }
+            for i in 0..<arr!.count {
 
-                let dic3:Dictionary<String,Any> = arr[i] as! Dictionary<String, Any>
+                let dic3:Dictionary<String,Any> = arr?[i] as! Dictionary<String, Any>
                 let user = detailModel(JSON:dic3)
                 print(user?.url as Any)
                 self.arrList.append(user as Any)

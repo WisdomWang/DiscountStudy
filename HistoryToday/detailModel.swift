@@ -17,6 +17,7 @@ class detailModel: NSObject,Mappable {
     required init?(map: Map) {
        
     }
+    
     func mapping(map: Map) {
         
         title<-map["title"]
