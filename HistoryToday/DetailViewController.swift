@@ -22,6 +22,14 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationItem.title = "历史上的今天"
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        button .setImage(UIImage(named: "popBack"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0)
+        button.addTarget(self, action: #selector(popBack), for: .touchUpInside)
+        let leftButton = UIBarButtonItem(customView: button)
+        self.navigationItem.leftBarButtonItem = leftButton
+
         mainTableView.delegate = self
         mainTableView.dataSource = self
         mainTableView.estimatedRowHeight = self.view.frame.size.height
@@ -52,7 +60,10 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         cell.pushToBigPic = {
             
-            PopView.showImage(image: cell.img.image!)
+            if cell.img.image != nil {
+                
+                PopView.showImage(image: cell.img.image!)
+            }
         }
         
         return cell
@@ -81,6 +92,12 @@ class DetailViewController: UIViewController,UITableViewDelegate,UITableViewData
           self.mainTableView.reloadData()
         }
     }
+    
+    @objc func popBack() {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

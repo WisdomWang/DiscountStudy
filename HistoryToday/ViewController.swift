@@ -10,14 +10,9 @@ import UIKit
 import Alamofire
 import Hue
 
-// 屏幕的宽
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
-
-// 屏幕的高
 let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
-
 let STATUS = UIApplication.shared.statusBarFrame.size.height
-
 let NAV:CGFloat = 44
 
 var idStr = ""
@@ -30,23 +25,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var idNameArr = [Any]()
     let now = Date()
     let dformatter = DateFormatter()
-    
     var changedDate:Date!
-    
     var bgView:UIView!
+    var mainTableView:UITableView!
     
-    let mainTableView = UITableView(frame: CGRect(x: 0, y: 50+NAV+STATUS, width:SCREEN_WIDTH, height: SCREEN_HEIGHT-50-STATUS-NAV), style: UITableViewStyle.plain)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.title = "历史上的今天"
-        mainTableView.delegate = self
-        mainTableView.dataSource = self
-        mainTableView.rowHeight = 90
-        mainTableView.showsVerticalScrollIndicator = false
-        self.view.addSubview(mainTableView)
-        self.loadList(date: now)
-        changedDate = now
+        self.view.backgroundColor = UIColor.white
         
         let headerView = UIView()
         headerView.frame = CGRect(x: 0, y: STATUS+NAV, width: SCREEN_WIDTH, height: 50)
@@ -63,9 +50,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         button.setTitleColor(UIColor(hex: "#333333"), for: .normal)
         button.addTarget(self, action: #selector(changeDate), for: .touchUpInside)
         headerView.addSubview(button)
-        
         self.view.addSubview(headerView)
-
+        
+        mainTableView = UITableView(frame: CGRect(x: 0, y: 50+NAV+STATUS, width:SCREEN_WIDTH, height: SCREEN_HEIGHT-50-STATUS-NAV), style: UITableViewStyle.plain)
+        mainTableView.delegate = self
+        mainTableView.dataSource = self
+        mainTableView.rowHeight = 90
+        mainTableView.showsVerticalScrollIndicator = false
+        self.view.addSubview(mainTableView)
+        self.loadList(date: now)
+        changedDate = now
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,7 +71,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 
         let identifier = "mainCell"
         let cell = MyTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: identifier)
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
         cell.titleLabel.text = arrList[indexPath.row] as? String
         cell.dateLabel.text = (arrDate[indexPath.row] as!String)
         return cell
