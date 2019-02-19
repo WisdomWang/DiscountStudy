@@ -41,7 +41,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         label = UILabel(frame: CGRect(x: 16, y: 0, width: SCREEN_WIDTH-32, height: 50))
         dformatter.dateFormat = "YYYY年MM月dd日"
         label.text = dformatter.string(from:now)
-        //label.text = "Today：\(dformatter.string(from: now))"
+        
+        var  dateStr:NSString = dformatter.string(from: now) as NSString
+        var dateArr = dateStr.components(separatedBy: "年")
+        dateStr = dateArr[1] as NSString
+        label.text = dateStr as String
         headerView.addSubview(label)
         
         let button = UIButton(frame: CGRect(x: SCREEN_WIDTH-76, y: 0, width: 60, height: 50))
@@ -131,7 +135,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         bgView.removeFromSuperview()
         dformatter.dateFormat = "yyyy年 MM月 dd日"
-        label.text = dformatter.string(from:changedDate)
+        var dateStr:NSString = dformatter.string(from:changedDate) as NSString
+        var dateArr = dateStr.components(separatedBy: "年")
+        dateStr = dateArr[1] as NSString
+        label.text = dateStr as String
         self.loadList(date: changedDate)
     }
     
